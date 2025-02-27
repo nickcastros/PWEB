@@ -1,0 +1,180 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #0d0d1a;
+    color: #e0e0e0;
+    overflow-x: hidden;
+}
+
+header {
+    background-color: #1a1a2e;
+    color: #ff00ff;
+    text-align: center;
+    padding: 1rem;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 5rem;
+    color: #00ffff;
+    text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+}
+
+nav {
+    background-color: #2a2a40;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav a {
+    color: #ff00ff;
+    text-decoration: none;
+    margin: 0 1rem;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #00ffff;
+    text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+section {
+    background-color: #1a1a2e;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+h1, h2 {
+    color: #00ffff;
+    text-align: center;
+}
+
+h2 {
+    border-bottom: 2px solid #ff00ff;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+    text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+}
+
+img {
+    display: block;
+    margin: 1rem auto;
+    border: 2px solid #ff00ff;
+    border-radius: 4px;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+}
+
+ul, ol {
+    margin-left: 2rem;
+    text-align: left;
+    padding-left: 0;
+    list-style-position: inside;
+    color: #e0e0e0;
+}
+
+a {
+    color: #00ffff;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ff00ff;
+    text-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+}
+
+footer {
+    background-color: #1a1a2e;
+    color: #ff00ff;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin: 1rem 0 0.5rem;
+    font-weight: bold;
+    color: #00ffff;
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ff00ff;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #1a1a2e;
+    color: #e0e0e0;
+}
+
+input:focus, textarea:focus, select:focus {
+    border-color: #00ffff;
+    box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+}
+
+fieldset {
+    border: 1px solid #ff00ff;
+    border-radius: 4px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+legend {
+    font-weight: bold;
+    padding: 0 0.5rem;
+    color: #00ffff;
+}
+
+input[type="radio"], input[type="checkbox"] {
+    width: auto;
+    margin-right: 0.5rem;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #ff00ff;
+    color: #1a1a2e;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    box-shadow: 0 0 5px #ff00ff, 0 0 10px #ff00ff;
+}
+
+button:hover {
+    background-color: #00ffff;
+    color: #1a1a2e;
+    box-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff;
+}

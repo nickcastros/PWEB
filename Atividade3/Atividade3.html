@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KyberCode - Cursos de Programação</title>
+    <link rel="stylesheet" href="Atividade3.css">
+</head>
+<body>
+    <header>
+        <h1>KyberCode</h1>
+        <nav>
+            <a href="#sobre">Sobre</a>
+            <a href="#conteudo">Conteúdo</a>
+            <a href="#contato">Contato</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="sobre">
+            <h2>Sobre Nós</h2>
+            <img src="img/Photo.PNG" alt="Cristal de Kyber">
+            <p>A KyberCode é uma empresa dedicada ao ensino de programação web.</p>
+            <p>Nossa missão é tornar o aprendizado acessível para todos.<br>
+            Trabalhamos com HTML, CSS, JavaScript e muito mais.</p>
+        </section>
+
+        <section id="conteudo">
+            <h2>Conteúdos Abordados</h2>
+            <ol>
+                <li>Introdução ao HTML</li>
+                <li>Estilização com CSS</li>
+                <li>Fundamentos do JavaScript</li>
+                <li>Desenvolvimento de Projetos Práticos</li>
+            </ol>
+        </section>
+
+        <section id="contato">
+            <h2>Contato</h2>
+            <ul>
+                <li>Email: <a href="mailto:nicolas_castrosilva@outlook.com">nicolas_castrosilva@outlook.com</a></li>
+                <li>Telefone: (11) 9999-9999</li>
+                <li>Visite nosso <a href="https://www.instagram.com" target="_blank">Instagram</a></li>
+            </ul>
+        </section>
+
+        <section id="formulario-contato">
+            <h2>Envie uma Mensagem</h2>
+            <form action="#" method="post">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required>
+
+                <label for="email">E-mail:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="telefone">Telefone:</label>
+                <input type="tel" id="telefone" name="telefone" placeholder="(00) 00000-0000" required>
+
+                <fieldset>
+                    <legend>Como você prefere ser contactado?</legend>
+                    <label>
+                        <input type="radio" name="contato" value="email" checked> E-mail
+                    </label>
+                    <label>
+                        <input type="radio" name="contato" value="telefone"> Telefone
+                    </label>
+                    <label>
+                        <input type="radio" name="contato" value="whatsapp"> WhatsApp
+                    </label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Quais áreas você tem interesse?</legend>
+                    <label>
+                        <input type="checkbox" name="interesse" value="html-css"> HTML e CSS
+                    </label>
+                    <label>
+                        <input type="checkbox" name="interesse" value="javascript"> JavaScript
+                    </label>
+                    <label>
+                        <input type="checkbox" name="interesse" value="react"> React
+                    </label>
+                    <label>
+                        <input type="checkbox" name="interesse" value="backend"> Backend (Node.js, Python)
+                    </label>
+                </fieldset>
+
+                <label for="como-conheceu">Como você conheceu a KyberCode?</label>
+                <select id="como-conheceu" name="como-conheceu">
+                    <option value="google">Google</option>
+                    <option value="indicacao">Indicação de um amigo</option>
+                    <option value="redes-sociais">Redes Sociais</option>
+                    <option value="outro">Outro</option>
+                </select>
+
+                <label for="mensagem">Mensagem:</label>
+                <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 KyberCode. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>
