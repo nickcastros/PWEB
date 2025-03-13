@@ -1,0 +1,93 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  overflow-y: auto;
+  justify-content: space-around;
+}
+
+.noticia {
+  flex: 1 1 calc(33.333% - 40px);
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  min-width: 300px;
+  position: relative;
+}
+
+.noticia img {
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+  margin-right: 15px;
+  object-fit: cover;
+}
+
+.conteudo {
+  flex: 1;
+}
+
+.esportes {
+  background-color: #d4edda;
+}
+
+.geral {
+  background-color: #f8d7da;
+}
+
+.entretenimento {
+  background-color: #fff3cd;
+}
+
+.noticia h3 {
+  margin-top: 0;
+  font-size: 1.2em;
+}
+
+.noticia p {
+  margin-top: 10px;
+  font-size: 1em;
+  line-height: 1.5;
+}
+
+.assunto {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.8em;
+  color: inherit;
+}
+
+.esportes .assunto {
+  color: #155724;
+}
+
+.geral .assunto {
+  color: #721c24;
+}
+
+.entretenimento .assunto {
+  color: #856404;
+}
