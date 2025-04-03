@@ -1,0 +1,36 @@
+<!-- Jogo pedra papel e tesoura -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pedra, Papel, Tesoura</title>
+    <link rel="stylesheet" href="Atividade7.css" />
+    <script src="Atividade7.js" defer></script>
+  </head>
+  <body>
+    <h1>Pedra, Papel, Tesoura</h1>
+    <div class="container">
+      <div class="game">
+        <div class="player-choice">
+          <h2>Faça sua escolha!</h2>
+          <button onclick="atualizarResultado('pedra')" id="rock">Pedra</button>
+          <button onclick="atualizarResultado('papel')" id="paper">
+            Papel
+          </button>
+          <button onclick="atualizarResultado('tesoura')" id="scissors">
+            Tesoura
+          </button>
+        </div>
+        <div class="computer-choice">
+          <h2>Escolha do Computador</h2>
+          <p class="escolha-computador" id="escolha-computador"></p>
+        </div>
+        <div class="result">
+          <h2>Resultado</h2>
+          <p class="resultado" id="resultado"></p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
