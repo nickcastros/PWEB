@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filme PWEB</title>
+    <link rel="stylesheet" href="Parte1.css" />
+    <script src="Parte1.js" defer></script>
+  </head>
+  <body>
+    <div class="survey-container">
+      <h1>Filme PWEB</h1>
+      <form onsubmit="handleSurveySubmit(event)">
+        <label for="age">Idade:</label>
+        <input type="number" id="age" name="age" min="1" max="120" required />
+
+        <label for="sex">Sexo:</label>
+        <select id="sex" name="sex" required>
+          <option value="" disabled selected>Escolha</option>
+          <option value="male">Masculino</option>
+          <option value="female">Feminino</option>
+          <option value="other">Outro</option>
+        </select>
+
+        <label>Evaluation:</label>
+        <div class="evaluation-buttons">
+          <button type="submit" name="evaluation" value="ótimo">Ótimo</button>
+          <button type="submit" name="evaluation" value="bom">Bom</button>
+          <button type="submit" name="evaluation" value="regular">Regular</button>
+          <button type="submit" name="evaluation" value="péssimo">Péssimo</button>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
