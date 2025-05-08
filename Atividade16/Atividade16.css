@@ -1,0 +1,18 @@
+body {
+  padding: 40px;
+}
+
+h1 {
+  font-size: 24px;
+}
+
+label,
+select {
+  font-size: 18px;
+}
+
+select {
+  margin-top: 10px;
+  padding: 8px;
+  width: 300px;
+}
