@@ -1,15 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Auth } from './auth/auth';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  template: `
-    <h1>Welcome to {{title}}!</h1>
-
-    <router-outlet />
-  `,
-  styles: [],
+  imports: [Auth],
+  templateUrl: './app.html',
+  styleUrl: './app.scss',
 })
 export class App {
   protected title = 'ProjetoFinal';
