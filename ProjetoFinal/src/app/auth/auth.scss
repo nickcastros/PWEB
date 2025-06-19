@@ -1,0 +1,95 @@
+.form-widget {
+  background: #27314e;
+  padding-right: 2rem;
+  padding-left: 2rem;
+  border-radius: 24px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 340px;
+}
+.auth-center {
+  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.header {
+  font-size: 100px;
+}
+
+.blue-text {
+  color: #569fff;
+}
+.title {
+  font-size: 42px;
+  text-align: center;
+}
+.button-container {
+  margin-top: 18px;
+  text-align: center;
+}
+.forgot-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -8px; // aproxima do input de senha
+  margin-bottom: 8px;
+}
+.signup-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.custom-btn {
+  background: #1c6cd5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  width: 150px;
+  padding: 12px 0px;
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.custom-btn:hover,
+.custom-btn:focus {
+  background: #1553a6;
+}
+
+/* Botão de recuperar senha */
+.forgot-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  transition: color 0.2s;
+}
+.forgot-btn:hover,
+.forgot-btn:focus {
+  color: #3776c7;
+  background: none;
+}
+
+/* Botão de criar conta */
+.signup-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.signup-btn:hover,
+.signup-btn:focus {
+  background: none;
+  color: #3776c7;
+}

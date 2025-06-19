@@ -1,0 +1,19 @@
+<div class="floating-input-wrapper">
+  <input
+    [id]="id"
+    [type]="type"
+    [placeholder]="placeholder"
+    [formControl]="control"
+    class="floating-input"
+  />
+  <label
+    [for]="id"
+    class="floating-label"
+    [class.floating]="control.value || control.touched"
+  >
+    {{ label }}
+  </label>
+  <div class="error" *ngIf="control.invalid && control.touched">
+    Campo inválido
+  </div>
+</div>

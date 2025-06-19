@@ -1,28 +1,88 @@
 import { Component } from '@angular/core';
 import { Supabase } from '../supabase';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { InputComponent } from '../shared/input/input';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-auth',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, InputComponent, CommonModule],
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
 })
 export class Auth {
   loading = false;
+  isSignUp = false;
+
   signInForm = new FormGroup({
-    email: new FormControl('', {}),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(32),
+    ]),
+    confirmEmail: new FormControl('', []),
+    confirmPassword: new FormControl('', []),
   });
 
   constructor(private readonly supabase: Supabase) {}
+
+  get controls() {
+    return this.signInForm.controls;
+  }
+
+  switchMode() {
+    this.isSignUp = !this.isSignUp;
+    // Limpa os campos de confirmação ao alternar
+    this.signInForm.get('confirmEmail')?.reset();
+    this.signInForm.get('confirmPassword')?.reset();
+    // Ajusta validação dos campos de confirmação
+    if (this.isSignUp) {
+      this.signInForm
+        .get('confirmEmail')
+        ?.setValidators([Validators.required, Validators.email]);
+      this.signInForm
+        .get('confirmPassword')
+        ?.setValidators([
+          Validators.required,
+          Validators.minLength(6),
+          Validators.maxLength(32),
+        ]);
+    } else {
+      this.signInForm.get('confirmEmail')?.clearValidators();
+      this.signInForm.get('confirmPassword')?.clearValidators();
+    }
+    this.signInForm.get('confirmEmail')?.updateValueAndValidity();
+    this.signInForm.get('confirmPassword')?.updateValueAndValidity();
+  }
 
   async onSubmit(): Promise<void> {
     try {
       this.loading = true;
       const email = this.signInForm.value.email as string;
-      const { error } = await this.supabase.signIn(email);
-      if (error) throw error;
-      alert('Check your email for the login link!');
+      const password = this.signInForm.value.password as string;
+
+      if (this.isSignUp) {
+        // Validação extra para confirmação
+        if (
+          email !== this.signInForm.value.confirmEmail ||
+          password !== this.signInForm.value.confirmPassword
+        ) {
+          alert('E-mail ou senha não conferem!');
+          return;
+        }
+        // Aqui você pode chamar o método de cadastro do seu serviço
+        alert('Conta criada com sucesso! (implemente o cadastro)');
+      } else {
+        const { error } = await this.supabase.signIn(email);
+        if (error) throw error;
+        alert('Check your email for the login link!');
+      }
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);

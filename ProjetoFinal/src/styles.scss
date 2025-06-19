@@ -1,3 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Roboto", sans-serif; }
+html,
+body {
+  background-color: #091927;
+  color: #f5f5f5;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body,
+input,
+button,
+textarea,
+select {
+  font-family: "Roboto", Arial, sans-serif !important;
+}

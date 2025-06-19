@@ -1,21 +1,53 @@
-<div class="row flex-center flex">
+<div class="auth-center">
+  <h1 class="header">Cine<span class="blue-text">List</span></h1>
   <div class="col-6 form-widget" aria-live="polite">
-    <h1 class="header">Supabase + Angular</h1>
-    <p class="description">Sign in via magic link with your email below</p>
-    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()" class="form-widget">
+    <p class="title">{{ isSignUp ? 'Criar conta' : 'Entrar' }}</p>
+    <form [formGroup]="signInForm" (ngSubmit)="onSubmit()">
       <div>
-        <label for="email">Email</label>
-        <input
-          id="email"
-          formControlName="email"
-          class="inputField"
+        <app-input
+          label="E-mail"
           type="email"
-          placeholder="Your email"
+          placeholder="cinelist@cinelist.com"
+          [control]="controls['email']"
+          id="email"
         />
+        <ng-container *ngIf="isSignUp">
+          <app-input
+            label="Confirmar e-mail"
+            type="email"
+            placeholder="Confirme seu e-mail"
+            [control]="controls['confirmEmail']"
+            id="confirmEmail"
+          />
+        </ng-container>
+        <app-input
+          label="Senha"
+          type="password"
+          placeholder="*****"
+          [control]="controls['password']"
+          id="password"
+        />
+        <ng-container *ngIf="isSignUp">
+          <app-input
+            label="Confirmar senha"
+            type="password"
+            placeholder="Confirme sua senha"
+            [control]="controls['confirmPassword']"
+            id="confirmPassword"
+          />
+        </ng-container>
+        <div class="forgot-container" *ngIf="!isSignUp">
+          <button type="button" class="forgot-btn">Recuperar senha</button>
+        </div>
       </div>
-      <div>
-        <button type="submit" class="button block" [disabled]="loading">
-          {{ loading ? 'Loading' : 'Send magic link' }}
+      <div class="button-container">
+        <button class="custom-btn" type="submit" [disabled]="loading">
+          {{ isSignUp ? 'Criar conta' : 'Entrar' }}
+        </button>
+      </div>
+      <div class="signup-container">
+        <button type="button" class="signup-btn" (click)="switchMode()">
+          {{ isSignUp ? 'Entrar' : 'Criar conta' }}
         </button>
       </div>
     </form>
