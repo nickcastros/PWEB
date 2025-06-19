@@ -1,0 +1,13 @@
+<div class="review-input-wrapper">
+  <label class="review-label">{{ label }}</label>
+  <textarea
+    class="review-textarea"
+    [formControl]="control"
+    [attr.maxLength]="maxLength"
+    rows="6"
+    placeholder="Conte-nos o que achou do filme..."
+  ></textarea>
+  <div class="char-counter">
+    {{ control.value?.length || 0 }}/{{ maxLength }}
+  </div>
+</div>

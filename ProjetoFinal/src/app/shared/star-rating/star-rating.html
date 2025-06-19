@@ -6,11 +6,9 @@
       [class.inactive]="i >= displayValue"
       [ngStyle]="{
         color: i < displayValue
-          ? displayValue <= 4
+          ? displayValue <= 0
             ? '#b0b0b0'
-            : displayValue <= 7
-              ? '#ffd700'
-              : '#ff7f50'
+              : '#ffd700'
           : '#b0b0b0'
       }"
       (mouseenter)="setHovered(i + 1)"

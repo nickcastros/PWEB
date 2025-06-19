@@ -36,10 +36,17 @@
       </div>
     </div>
   </div>
-  <div class="rating-container">
-    <div class="rating-top-row">
+  <div class="star-rating-container">
+    <div class="star-rating-top-row">
       <div class="title-container">Sua avaliação</div>
       <div class="rating-stars"><app-star-rating /></div>
     </div>
   </div>
+  <app-review-input [control]="reviewControl" />
+  <div class="send-button-container">
+    <button class="send-button">Enviar</button>
+  </div>
+  <div class="title-container">Últimas avaliações</div>
+  <p></p>
+  <app-review-card *ngFor="let review of movie.reviews" [review]="review" />
 </div>

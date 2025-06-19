@@ -1,0 +1,38 @@
+.review-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+  position: relative;
+}
+
+.review-label {
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #569fff;
+}
+
+.review-textarea {
+  width: 100%;
+  border-radius: 24px;
+  border: 1px solid #ccc;
+  padding: 16px 20px;
+  font-size: 16px;
+  resize: vertical;
+  min-height: 120px;
+  outline: none;
+  background: #fff;
+  color: #000;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: #569fff;
+  }
+}
+
+.char-counter {
+  align-self: flex-end;
+  font-size: 12px;
+  color: #999;
+  margin-top: 4px;
+}

@@ -1,0 +1,17 @@
+.review-card {
+  background-color: #27314e;
+  display: flex;
+  flex-direction: row;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
+
+.left-container {
+  padding-left: 12px;
+  width: 120px;
+}
+.content-container {
+  width: 100%;
+  padding-left: 12px;
+}
