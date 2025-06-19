@@ -30,3 +30,37 @@
 .blue-text {
   color: #569fff;
 }
+
+.login-btn {
+  margin-left: auto;
+  background: #569fff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.login-btn:hover,
+.login-btn:focus {
+  background: #3776c7;
+}
+
+.home-btn {
+  margin-left: 24px;
+  background: none;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.home-btn:hover,
+.home-btn:focus {
+  color: #569fff;
+}
