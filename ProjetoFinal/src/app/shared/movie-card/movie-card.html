@@ -1,4 +1,4 @@
-<div class="movie-card">
-  <img [src]="poster" [alt]="title" class="movie-poster" />
-  <div class="movie-title">{{ title }}</div>
+<div class="movie-card" [routerLink]="['/details', movie.id]">
+  <img [src]="poster" [alt]="movie.title" class="movie-poster" />
+  <div class="movie-title">{{ movie.title }}</div>
 </div>

@@ -1,0 +1,60 @@
+.rounded-input-wrapper {
+  position: relative;
+  margin-top: 20px;
+}
+
+.rounded-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px 48px 12px 20px; // espaço à direita para o ícone
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 999px; // semicircular
+  outline: none;
+  background-color: #fff;
+  color: #000;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:focus {
+    border-color: #0077ff;
+    box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.1);
+  }
+
+  &::placeholder {
+    color: transparent;
+  }
+}
+
+.rounded-label {
+  position: absolute;
+  top: 30%;
+  left: 24px;
+  transform: translateY(10%);
+  font-size: 16px;
+  color: #999;
+  pointer-events: none;
+  transition: all 0.2s ease-out;
+  padding: 0 4px;
+}
+
+.rounded-label.floating {
+  top: 4px;
+  font-size: 12px;
+  color: #999;
+}
+
+i.ph {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: #999;
+  pointer-events: none;
+}
+
+.error {
+  margin-top: 4px;
+  color: #ff5252;
+  font-size: 12px;
+}

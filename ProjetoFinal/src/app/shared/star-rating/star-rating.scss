@@ -1,0 +1,19 @@
+.star-rating-container {
+  display: flex;
+  gap: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ph-star {
+  font-size: 48px;
+  transition: color 0.2s;
+}
+
+.star.inactive {
+  color: #b0b0b0;
+}
+
+.star.active {
+  /* A cor é definida inline via [ngStyle] para mudar conforme a nota */
+}

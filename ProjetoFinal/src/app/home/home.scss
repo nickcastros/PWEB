@@ -1,10 +1,9 @@
 .main-container {
-  margin: 80px auto 200px auto; // exemplo: 20px de margem superior
-  display: flex;
+  margin: 80px auto 200px auto;
   max-width: 1200px;
-  width: 100%;
   background: transparent;
 }
+
 .content-container {
   margin: 0;
 }
@@ -28,4 +27,12 @@
 
 .movies-container {
   display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.top-list-container {
+  display: flex;
+  flex-direction: column;
 }

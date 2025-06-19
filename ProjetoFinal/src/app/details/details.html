@@ -1,0 +1,45 @@
+<div class="details-container">
+  <div class="details-section">
+    <img [src]="poster" [alt]="movie.title" class="movie-poster" />
+    <div class="content-container">
+      <div class="top-container">
+        <div class="title-container">{{movie.title}}</div>
+        <div class="rating-container"><app-rating-stars /></div>
+      </div>
+      <div class="genres-container">
+        <app-chip *ngFor="let genre of movie.genres" [genre]="genre" />
+      </div>
+      <div class="synopsys-container">{{movie.synopsis}}</div>
+      <div class="credits-container">
+        <div class="credits-title-container">
+          <div class="credits-title">Direção</div>
+          <div class="credits-title">Roteiristas</div>
+          <div class="credits-title">Atores</div>
+        </div>
+        <div class="credits-content-container">
+          <div class="credits-row">
+            <div class="credits-content" *ngFor="let item of movie.director">
+              {{item}}
+            </div>
+          </div>
+          <div class="credits-row">
+            <div class="credits-content" *ngFor="let item of movie.writers">
+              {{item}}
+            </div>
+          </div>
+          <div class="credits-row">
+            <div class="credits-content" *ngFor="let item of movie.actors">
+              {{item}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="rating-container">
+    <div class="rating-top-row">
+      <div class="title-container">Sua avaliação</div>
+      <div class="rating-stars"><app-star-rating /></div>
+    </div>
+  </div>
+</div>

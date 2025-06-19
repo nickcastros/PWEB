@@ -1,60 +1,61 @@
-<div class="main-container">
-  <div class="content-container">
-    <div class="home-title">
-      <h2>Cine<span class="blue-text">List</span></h2>
-    </div>
-    <div class="search-container">
-      <app-input
-        label="Nome do filme"
-        type="text"
-        placeholder="Karate Kid"
-        [control]="controls['nome']"
-        id="nome"
-      />
-      <app-input
-        label="Genero"
-        type="text"
-        placeholder="Luta"
-        [control]="controls['genero']"
-        id="genero"
-      />
-      <app-input
-        label="Ano"
-        type="number"
-        placeholder="2025"
-        [control]="controls['ano']"
-        id="ano"
-      />
-    </div>
+<div class="centered-container">
+  <div class="main-container">
+    <div class="content-container">
+      <div class="home-title">
+        <h2>Cine<span class="blue-text">List</span></h2>
+      </div>
+      <div class="search-container">
+        <app-input-rounded
+          label="Nome do filme"
+          type="text"
+          placeholder="Karate Kid"
+          [control]="controls['nome']"
+          id="nome"
+          icon="ph-magnifying-glass"
+        />
+        <app-select-rounded
+          label="Gênero"
+          [options]="generos"
+          [control]="controls['genero']"
+          id="genero"
+          icon="ph-film-reel"
+        />
+        <app-select-rounded
+          label="Ano"
+          [options]="anos"
+          [control]="controls['ano']"
+          id="ano"
+          icon="ph-calendar-blank"
+        />
+      </div>
 
-    <div>
-      <h2>Popular</h2>
-      <div class="movies-container">
-        <app-movie-card
-          *ngFor="let movie of movies"
-          [title]="movie.title"
-          [posterUrl]="movie.posterUrl"
-        ></app-movie-card>
+      <div>
+        <h2>Popular</h2>
+        <div class="movies-container">
+          <app-movie-card
+            *ngFor="let movie of movies"
+            [movie]="movie"
+          ></app-movie-card>
+        </div>
       </div>
-    </div>
-    <div>
-      <h2>Recentes</h2>
-      <div class="movies-container">
-        <app-movie-card
-          *ngFor="let movie of movies"
-          [title]="movie.title"
-          [posterUrl]="movie.posterUrl"
-        ></app-movie-card>
+      <div>
+        <h2>Recentes</h2>
+        <div class="movies-container">
+          <app-movie-card
+            *ngFor="let movie of movies"
+            [movie]="movie"
+          ></app-movie-card>
+        </div>
       </div>
-    </div>
-    <div>
-      <h2>Em Breve</h2>
-      <div class="movies-container">
-        <app-movie-card
-          *ngFor="let movie of movies"
-          [title]="movie.title"
-          [posterUrl]="movie.posterUrl"
-        ></app-movie-card>
+      <div>
+        <h2>Em Breve</h2>
+        <div class="movies-container">
+          <app-movie-card *ngFor="let movie of movies" [movie]="movie" />
+        </div>
+      </div>
+      <div class="top-list-container">
+        <h2>Top 10</h2>
+        <app-toplist-card *ngFor="let top of top10" [movie]="top" />
       </div>
     </div>
   </div>

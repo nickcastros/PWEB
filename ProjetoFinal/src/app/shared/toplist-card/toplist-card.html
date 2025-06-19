@@ -1,0 +1,14 @@
+<div class="card-container" [routerLink]="['/details', movie.id]">
+  <div class="position-number">#{{movie.position}}</div>
+  <img [src]="poster" [alt]="movie.posterUrl" class="movie-poster" />
+  <div class="description-container">
+    <div class="movie-title">{{ movie.title }}</div>
+    <div class="genres-container">
+      <app-chip *ngFor="let genre of genres" [genre]="genre" />
+    </div>
+
+  </div>
+  <div class="rating-stars">
+    <app-rating-stars [rating]="movie.rating" />
+  </div>
+</div>

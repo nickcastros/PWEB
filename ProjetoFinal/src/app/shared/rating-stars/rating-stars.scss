@@ -1,0 +1,29 @@
+.rating-stars-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.stars-rating-container {
+  display: flex;
+  align-items: baseline;
+}
+
+.ph-star {
+  font-size: 32px; // ajuste conforme o visual desejado
+  color: #ffef3c;
+}
+
+.rate-text {
+  font-size: 32px; // igual ao .ph-star
+  color: #fff;
+  line-height: 1; // garante que não aumente a altura
+  margin: 0; // remove margens extras
+  padding: 0;
+}
+
+.max-rate-text {
+  font-size: 12px;
+  color: #94a5d9;
+}

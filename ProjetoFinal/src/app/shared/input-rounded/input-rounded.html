@@ -1,0 +1,20 @@
+<div class="rounded-input-wrapper">
+  <input
+    [id]="id"
+    [type]="type"
+    [placeholder]="placeholder"
+    [formControl]="control"
+    class="rounded-input"
+  />
+  <label
+    [for]="id"
+    class="rounded-label"
+    [class.floating]="control.value || control.touched"
+  >
+    {{ label }}
+  </label>
+  <i *ngIf="icon" class="ph" [ngClass]="icon"></i>
+  <div class="error" *ngIf="control.invalid && control.touched">
+    Campo inválido
+  </div>
+</div>

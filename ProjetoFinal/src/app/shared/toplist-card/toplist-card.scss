@@ -1,0 +1,54 @@
+.card-container {
+  display: flex;
+  height: 150px;
+  padding: 8px;
+  background-color: #27314e;
+  margin-bottom: 12px;
+  border-radius: 12px;
+  overflow: hidden; // garante que nada transborde
+  cursor: pointer;
+}
+
+.movie-poster {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  display: block;
+}
+
+.position-number {
+  margin: 24px;
+  margin-right: 48px;
+  display: flex;
+  align-items: center;
+  font-size: 42px;
+}
+
+.description-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  margin-left: 32px;
+  align-items: flex-start;
+  justify-content: center;
+  padding-left: 12px;
+}
+
+.movie-title {
+  font-size: 24px;
+}
+
+.genres-container {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 200px;
+}

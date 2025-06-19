@@ -14,3 +14,12 @@ textarea,
 select {
   font-family: "Roboto", Arial, sans-serif !important;
 }
+.centered-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html {
+  scrollbar-gutter: stable;
+}

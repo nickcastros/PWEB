@@ -2,13 +2,13 @@
   width: auto;
   display: flex;
   flex-direction: column;
-  margin-right: 16px;
+  cursor: pointer;
 }
 
 .movie-poster {
-  width: 200px;
-  height: 300px;
-  object-fit: cover;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 .movie-title {

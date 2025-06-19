@@ -1,0 +1,14 @@
+<div class="rounded-select-wrapper">
+  <select
+    [id]="id"
+    [formControl]="control"
+    class="rounded-select"
+  >
+    <option value="" disabled selected hidden>{{ label }}</option>
+    <option *ngFor="let opt of options" [value]="opt.value">{{ opt.label }}</option>
+  </select>
+  <i *ngIf="icon" class="ph" [ngClass]="icon"></i>
+  <div class="error" *ngIf="control.invalid && control.touched">
+    Campo obrigatório
+  </div>
+</div>
