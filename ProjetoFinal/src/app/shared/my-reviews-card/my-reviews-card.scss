@@ -1,0 +1,77 @@
+.my-reviews-card {
+  background-color: #27314e;
+  display: flex;
+  flex-direction: row;
+  height: 200px;
+  align-items: flex-start;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 10px;
+}
+.mid-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-left: 24px;
+  width: 300px;
+}
+.poster-container {
+  display: flex;
+  height: 100%;
+  width: auto;
+}
+.movie-poster {
+  border-radius: 8px;
+}
+.chips-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top: 12px;
+  gap: 8px;
+}
+.title {
+  font-size: 28px;
+}
+.rating-stars-content {
+  margin-top: 12px;
+}
+.content-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  height: 100%;
+  justify-content: space-between;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  align-items: end;
+  justify-content: flex-end;
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  color: #569fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.edit-btn:hover {
+  background: #e0f0ff;
+}
+
+.delete-btn {
+  color: #ff5252;
+}
+
+.delete-btn:hover {
+  background: #ffe0e0;
+}

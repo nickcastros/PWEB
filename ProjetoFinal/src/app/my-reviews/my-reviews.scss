@@ -1,0 +1,28 @@
+.my-reviews-content {
+  margin: 80px auto 200px auto;
+  max-width: 1200px;
+  background: transparent;
+}
+
+.top-container {
+  display: flex;
+  height: 150px;
+  align-items: center;
+}
+
+.profile-image {
+  max-height: 100%;
+  max-width: 120px;
+  object-fit: contain;
+}
+
+.user-name {
+  font-size: 42px;
+  margin-left: 20px;
+}
+
+.title {
+  margin-top: 26px;
+  margin-bottom: 12px;
+  font-size: 38px;
+}

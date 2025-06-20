@@ -1,0 +1,10 @@
+<div class="my-reviews-content">
+  <div class="top-container">
+    <div class="profile-image-container">
+      <img [src]="profile" class="profile-image" />
+    </div>
+    <div class="user-name">{{user.name}}</div>
+  </div>
+  <div class="title">Minhas Avaliações</div>
+  <app-my-reviews-card *ngFor="let review of user.reviews" [review]="review" />
+</div>
