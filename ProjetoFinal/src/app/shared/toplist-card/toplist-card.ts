@@ -17,12 +17,10 @@ export class ToplistCard {
     title: string;
     posterUrl: string;
     rating: number;
+    genres: [];
   };
 
   get poster(): string {
-    console.log();
     return 'assets/images/movie.png';
   }
-
-  genres = ['Ação', 'Aventura', 'Comédia', 'SciFi'];
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MovieCardComponent } from '../shared/movie-card/movie-card';
@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { searchMovies, MovieSearchResult } from '../helpers/movie-search';
+import { Supabase } from '../supabase';
 
 @Component({
   selector: 'app-home',
@@ -22,10 +23,18 @@ import { searchMovies, MovieSearchResult } from '../helpers/movie-search';
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
-export class Home {
+export class Home implements OnInit {
   searchResults: MovieSearchResult[] = [];
-
-  constructor(private http: HttpClient) {
+  top10: {
+    id: any;
+    title: any;
+    posterUrl: any;
+    rating: any;
+    reviewsQty: any;
+    position: number;
+    genres: [];
+  }[] = [];
+  constructor(private http: HttpClient, private supabase: Supabase) {
     this.searchForm
       .get('nome')!
       .valueChanges.pipe(
@@ -37,7 +46,13 @@ export class Home {
         this.searchResults = results;
       });
   }
+  async ngOnInit() {
+    this.top10 = await this.supabase.getTop10Movies();
 
+    this.top10.forEach((movie) => {
+      console.log(movie.genres);
+    });
+  }
   searchForm = new FormGroup({
     nome: new FormControl(''),
     genero: new FormControl(''),
@@ -50,25 +65,6 @@ export class Home {
     { id: '3', title: 'Interestelar', posterUrl: '' },
     { id: '4', title: 'Avangers', posterUrl: '' },
     { id: '5', title: 'Ad Astra', posterUrl: '' },
-  ];
-
-  top10 = [
-    { id: '1', position: 1, title: 'Karate Kid', posterUrl: '', rating: 10 },
-    { id: '2', position: 2, title: 'Matrix', posterUrl: '', rating: 9.5 },
-    { id: '3', position: 3, title: 'Interestelar', posterUrl: '', rating: 9.3 },
-    { id: '4', position: 4, title: 'Avangers', posterUrl: '', rating: 9.0 },
-    {
-      id: '5',
-      position: 5,
-      title: 'O Poderoso Chefão',
-      posterUrl: '',
-      rating: 8.9,
-    },
-    { id: '6', position: 6, title: 'Ad Astra', posterUrl: '', rating: 8.75 },
-    { id: '7', position: 7, title: 'Ad Astra', posterUrl: '', rating: 8.5 },
-    { id: '8', position: 8, title: 'Ad Astra', posterUrl: '', rating: 8.25 },
-    { id: '9', position: 9, title: 'Ad Astra', posterUrl: '', rating: 8 },
-    { id: '10', position: 10, title: 'Ad Astra', posterUrl: '', rating: 7.95 },
   ];
 
   generos = [

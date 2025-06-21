@@ -253,8 +253,6 @@ export class Supabase {
     if (error || !reviews) {
       return [];
     }
-
-    // Mapeia para um formato amigável para o card
     return reviews.map((r: any) => ({
       id: r.id,
       name: r.movies?.title || 'Filme',
@@ -280,5 +278,33 @@ export class Supabase {
       .eq('id', review_id);
 
     if (error) throw error;
+  }
+
+  async getTop10Movies() {
+    const { data: movies, error } = await this.supabase
+      .from('movies')
+      .select('api_id, title, poster_url, avg_rating, reviews_qty, genres')
+      .order('avg_rating', { ascending: false })
+      .order('reviews_qty', { ascending: false })
+      .limit(10);
+
+    if (error || !movies) {
+      return [];
+    }
+
+    // Mapeia para o formato desejado no seu card
+    return movies.map((m: any, idx: number) => ({
+      id: m.api_id,
+      title: m.title,
+      posterUrl: m.poster_url,
+      rating: m.avg_rating,
+      reviewsQty: m.reviews_qty,
+      position: idx + 1,
+      genres: Array.isArray(m.genres)
+        ? m.genres
+        : typeof m.genres === 'string' && m.genres.length > 0
+        ? m.genres.split(',').map((g: string) => g.trim())
+        : [],
+    }));
   }
 }
