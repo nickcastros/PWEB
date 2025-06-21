@@ -29,6 +29,15 @@
         />
       </div>
 
+      <div *ngIf="searchResults.length > 0">
+        <h2>Resultados Encontrados</h2>
+        <div class="movies-container">
+          <app-movie-card
+            *ngFor="let movie of searchResults"
+            [movie]="movie"
+          ></app-movie-card>
+        </div>
+      </div>
       <div>
         <h2>Popular</h2>
         <div class="movies-container">

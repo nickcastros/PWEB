@@ -65,3 +65,64 @@
   color: #569fff;
 }
 
+/* filepath: c:\Users\Nicolas\Documents\GitHub\PWEB\ProjetoFinal\src\app\header\header.scss */
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 8px;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #569fff;
+  background: #fff;
+}
+
+.user-name {
+  color: #569fff;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-info {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.user-menu {
+  position: absolute;
+  left: 0;
+  top: 110%;
+  background: #27314e;
+  border: 1px solid #569fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  padding: 8px 0;
+  min-width: 120px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #ff5252;
+  font-size: 16px;
+  padding: 8px 16px;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.logout-btn:hover {
+  background: #ffe0e0;
+}

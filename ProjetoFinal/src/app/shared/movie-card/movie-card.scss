@@ -1,18 +1,33 @@
 .movie-card {
-  width: auto;
-  display: flex;
-  flex-direction: column;
+  flex: 0 0 calc(20% - 19.2px);
+  box-sizing: border-box;
   cursor: pointer;
 }
 
 .movie-poster {
-  width: 100%;
-  height: auto;
-  object-fit: contain;
+  width: 220px; // ou o valor desejado
+  height: auto; // ou o valor desejado
+  object-fit: cover; // preenche o espaço, cortando se necessário
+  border-radius: 8px;
+  background: #222; // cor de fundo para imagens menores
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  display: block;
+  margin: 0 auto;
 }
 
 .movie-title {
   color: #fff;
+    width: 220px; // ou o valor desejado
+
   font-size: 16px;
   margin-top: 6px;
+  word-break: break-word; // permite quebra de linha em palavras longas
+  white-space: normal; // permite múltiplas linhas
+  max-height: 40px; // limite de altura (ajuste conforme desejar)
+  overflow: hidden; // esconde o excesso
+  text-overflow: ellipsis; // adiciona "..." se passar do limite
+  display: -webkit-box;
+  -webkit-line-clamp: 2; // mostra até 2 linhas
+  -webkit-box-orient: vertical;
+  line-clamp: 2; // padrão moderno para compatibilidade
 }

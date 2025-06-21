@@ -3,6 +3,21 @@
     <span class="logo">Cine<span class="blue-text">List</span></span>
     <button class="home-btn" routerLink="/">Home</button>
     <button class="home-btn" routerLink="/myreviews">Minhas avaliações</button>
-    <button class="login-btn" routerLink="/auth">Login</button>
+    <button *ngIf="!userName" class="login-btn" routerLink="/auth">
+      Login
+    </button>
+    <div *ngIf="userName" class="user-info" (click)="toggleMenu()" tabindex="0">
+      <img
+        [src]="avatarUrl"
+        alt="Avatar"
+        class="avatar"
+        width="32"
+        height="32"
+      />
+      <span class="user-name">{{ userName }}</span>
+      <div class="user-menu" *ngIf="showMenu">
+        <button class="logout-btn" (click)="logout($event)">Sair</button>
+      </div>
+    </div>
   </div>
 </header>

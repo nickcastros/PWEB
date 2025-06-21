@@ -1,4 +1,8 @@
 <div class="movie-card" [routerLink]="['/details', movie.id]">
-  <img [src]="poster" [alt]="movie.title" class="movie-poster" />
+  <img
+    [src]="movie.posterUrl || 'assets/images/movie.png'"
+    [alt]="poster"
+    class="movie-poster"
+  />
   <div class="movie-title">{{ movie.title }}</div>
 </div>

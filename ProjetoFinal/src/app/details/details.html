@@ -1,52 +1,69 @@
-<div class="details-container">
-  <div class="details-section">
-    <img [src]="poster" [alt]="movie.title" class="movie-poster" />
-    <div class="content-container">
-      <div class="top-container">
-        <div class="title-container">{{movie.title}}</div>
-        <div class="rating-container"><app-rating-stars /></div>
-      </div>
-      <div class="genres-container">
-        <app-chip *ngFor="let genre of movie.genres" [genre]="genre" />
-      </div>
-      <div class="synopsys-container">{{movie.synopsis}}</div>
-      <div class="credits-container">
-        <div class="credits-title-container">
-          <div class="credits-title">Direção</div>
-          <div class="credits-title">Roteiristas</div>
-          <div class="credits-title">Atores</div>
+<div class="details-container" *ngIf="movie as movie">
+  <div class="details-container">
+    <div class="details-section">
+      <img [src]="movie.posterUrl" [alt]="poster" class="movie-poster" />
+      <div class="content-container">
+        <div class="top-container">
+          <div class="title-container">{{movie.title}}</div>
+          <div class="rating-container"><app-rating-stars /></div>
         </div>
-        <div class="credits-content-container">
-          <div class="credits-row">
-            <div class="credits-content" *ngFor="let item of movie.director">
-              {{item}}
-            </div>
+        <div class="genres-container">
+          <app-chip *ngFor="let genre of movie.genres" [genre]="genre" />
+        </div>
+        <div class="synopsys-container">{{movie.synopsis}}</div>
+        <div class="credits-container">
+          <div class="credits-title-container">
+            <div class="credits-title">Direção</div>
+            <div class="credits-title">Roteiristas</div>
+            <div class="credits-title">Atores</div>
           </div>
-          <div class="credits-row">
-            <div class="credits-content" *ngFor="let item of movie.writers">
-              {{item}}
+          <div class="credits-content-container">
+            <div class="credits-row">
+              <div class="credits-content" *ngFor="let item of movie.director">
+                {{item}}
+              </div>
             </div>
-          </div>
-          <div class="credits-row">
-            <div class="credits-content" *ngFor="let item of movie.actors">
-              {{item}}
+            <div class="credits-row">
+              <div class="credits-content" *ngFor="let item of movie.writers">
+                {{item}}
+              </div>
+            </div>
+            <div class="credits-row">
+              <div class="credits-content" *ngFor="let item of movie.actors">
+                {{item}}
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <ng-container *ngIf="isLoggedIn; else loginPrompt">
+      <div class="star-rating-container">
+        <div class="star-rating-top-row">
+          <div class="title-container">Sua avaliação</div>
+          <div class="rating-stars"><app-star-rating /></div>
+        </div>
+      </div>
+      <app-review-input [control]="reviewControl" />
+      <div class="send-button-container">
+        <button class="send-button">Enviar</button>
+      </div>
+    </ng-container>
+
+    <ng-template #loginPrompt>
+      <div class="send-button-container" style="margin-top: 32px">
+        <button
+          class="send-button"
+          style="width: 100%; font-size: 22px; padding: 16px 0"
+          (click)="goToLogin()"
+        >
+          Entre para avaliar o filme
+        </button>
+      </div>
+    </ng-template>
+    <div class="title-container">Últimas avaliações</div>
+    <p></p>
+    <app-review-card *ngFor="let review of reviews" [review]="review" />
   </div>
-  <div class="star-rating-container">
-    <div class="star-rating-top-row">
-      <div class="title-container">Sua avaliação</div>
-      <div class="rating-stars"><app-star-rating /></div>
-    </div>
-  </div>
-  <app-review-input [control]="reviewControl" />
-  <div class="send-button-container">
-    <button class="send-button">Enviar</button>
-  </div>
-  <div class="title-container">Últimas avaliações</div>
-  <p></p>
-  <app-review-card *ngFor="let review of movie.reviews" [review]="review" />
 </div>

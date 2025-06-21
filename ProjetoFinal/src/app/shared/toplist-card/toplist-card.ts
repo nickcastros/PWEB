@@ -12,7 +12,7 @@ import { RouterLink } from '@angular/router';
 })
 export class ToplistCard {
   @Input() movie!: {
-    id: number;
+    id: string;
     position: number;
     title: string;
     posterUrl: string;

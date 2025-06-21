@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { InputComponent } from '../shared/input/input';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -30,7 +31,14 @@ export class Auth {
     confirmPassword: new FormControl('', []),
   });
 
-  constructor(private readonly supabase: Supabase) {}
+  constructor(private readonly supabase: Supabase, private router: Router) {}
+
+  ngOnInit() {
+    // Se já estiver logado, redireciona para home
+    if (this.supabase.session) {
+      this.router.navigate(['/']);
+    }
+  }
 
   get controls() {
     return this.signInForm.controls;
@@ -68,7 +76,6 @@ export class Auth {
       const password = this.signInForm.value.password as string;
 
       if (this.isSignUp) {
-        // Validação extra para confirmação
         if (
           email !== this.signInForm.value.confirmEmail ||
           password !== this.signInForm.value.confirmPassword
@@ -76,12 +83,14 @@ export class Auth {
           alert('E-mail ou senha não conferem!');
           return;
         }
-        // Aqui você pode chamar o método de cadastro do seu serviço
-        alert('Conta criada com sucesso! (implemente o cadastro)');
-      } else {
-        const { error } = await this.supabase.signIn(email);
+        // Chama o método de cadastro
+        const { error } = await this.supabase.signUp(email, password);
         if (error) throw error;
-        alert('Check your email for the login link!');
+        alert('Conta criada com sucesso! Verifique seu e-mail para confirmar.');
+      } else {
+        const { error } = await this.supabase.signIn(email, password);
+        if (error) throw error;
+        this.router.navigate(['/']);
       }
     } catch (error) {
       if (error instanceof Error) {

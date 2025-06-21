@@ -8,6 +8,7 @@ import {
   User,
 } from '@supabase/supabase-js';
 import { environment } from '../environments/environment';
+import { BehaviorSubject } from 'rxjs';
 
 export interface Profile {
   id?: string;
@@ -22,12 +23,24 @@ export interface Profile {
 export class Supabase {
   private supabase: SupabaseClient;
   _session: AuthSession | null = null;
+
+  private sessionSubject = new BehaviorSubject<AuthSession | null>(null);
+  session$ = this.sessionSubject.asObservable();
   constructor() {
     this.supabase = createClient(
       environment.supabaseUrl,
       environment.supabaseKey
     );
+    // Atualiza o subject ao iniciar
+    this.supabase.auth.getSession().then(({ data }) => {
+      this.sessionSubject.next(data.session);
+    });
+    // Escuta mudanças de autenticação
+    this.supabase.auth.onAuthStateChange((_, session) => {
+      this.sessionSubject.next(session);
+    });
   }
+
   get session() {
     this.supabase.auth.getSession().then(({ data }) => {
       this._session = data.session;
@@ -37,7 +50,7 @@ export class Supabase {
   profile(user: User) {
     return this.supabase
       .from('profiles')
-      .select(`username, website, avatar_url`)
+      .select(`full_name, email, avatar_url`)
       .eq('id', user.id)
       .single();
   }
@@ -46,8 +59,12 @@ export class Supabase {
   ) {
     return this.supabase.auth.onAuthStateChange(callback);
   }
-  signIn(email: string) {
-    return this.supabase.auth.signInWithOtp({ email });
+  signUp(email: string, password: string) {
+    return this.supabase.auth.signUp({ email, password });
+  }
+
+  signIn(email: string, password: string) {
+    return this.supabase.auth.signInWithPassword({ email, password });
   }
   signOut() {
     return this.supabase.auth.signOut();
@@ -64,5 +81,10 @@ export class Supabase {
   }
   uploadAvatar(filePath: string, file: File) {
     return this.supabase.storage.from('avatars').upload(filePath, file);
+  }
+  async getSession(): Promise<AuthSession | null> {
+    const { data } = await this.supabase.auth.getSession();
+    this.sessionSubject.next(data.session);
+    return data.session;
   }
 }

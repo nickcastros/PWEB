@@ -10,7 +10,7 @@ import { RouterLink } from '@angular/router';
 })
 export class MovieCardComponent {
   @Input() movie!: {
-    id?: number;
+    id?: string;
     title: string;
     posterUrl: string;
   };

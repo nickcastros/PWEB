@@ -27,9 +27,9 @@
 
 .movies-container {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 24px; // ajuste o espaçamento entre os cards
+  justify-content: flex-start;
 }
 
 .top-list-container {

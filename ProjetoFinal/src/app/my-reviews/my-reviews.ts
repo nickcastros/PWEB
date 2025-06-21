@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { MyReviewsCard } from '../shared/my-reviews-card/my-reviews-card';
 import { CommonModule } from '@angular/common';
-import { Chip } from '../shared/chip/chip';
 
 @Component({
   selector: 'app-my-reviews',
-  imports: [MyReviewsCard, CommonModule, Chip],
+  imports: [MyReviewsCard, CommonModule, ],
   templateUrl: './my-reviews.html',
   styleUrl: './my-reviews.scss',
 })
