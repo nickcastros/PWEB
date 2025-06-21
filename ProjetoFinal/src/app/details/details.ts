@@ -129,6 +129,7 @@ export class Details {
         api_id: this.movie.id,
         title: this.movie.title,
         poster_url: this.movie.posterUrl,
+        releaseDate: this.movie.releaseDate,
         genres: Array.isArray(this.movie.genres)
           ? this.movie.genres.join(', ')
           : this.movie.genres,

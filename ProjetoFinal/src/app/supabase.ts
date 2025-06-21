@@ -92,6 +92,7 @@ export class Supabase {
     api_id,
     title,
     poster_url,
+    releaseDate,
     genres,
     rating,
     content,
@@ -101,6 +102,7 @@ export class Supabase {
     api_id: string;
     title: string;
     poster_url: string;
+    releaseDate: Date | undefined;
     genres: string;
     rating: number;
     content: string;
@@ -114,6 +116,7 @@ export class Supabase {
           api_id,
           title,
           poster_url,
+          releaseDate,
           genres,
           updated_at: new Date(),
         },
@@ -306,5 +309,41 @@ export class Supabase {
         ? m.genres.split(',').map((g: string) => g.trim())
         : [],
     }));
+  }
+  async getPopularMoviesLast7Days() {
+    // Busca reviews dos últimos 7 dias, trazendo dados do filme
+    const { data: reviews, error } = await this.supabase
+      .from('reviews')
+      .select('movie_id, movies(title, poster_url, api_id, genres), created_at')
+      .gte(
+        'created_at',
+        new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+      );
+
+    if (error || !reviews) {
+      return [];
+    }
+
+    // Agrupa e conta reviews por filme no JS
+    const movieMap: Record<string, any> = {};
+    for (const r of reviews) {
+      const movie = Array.isArray(r.movies) ? r.movies[0] : r.movies;
+      const id = movie?.api_id;
+      if (!id) continue;
+      if (!movieMap[id]) {
+        movieMap[id] = {
+          id,
+          title: movie?.title,
+          posterUrl: movie?.poster_url,
+          reviewsQty: 0,
+        };
+      }
+      movieMap[id].reviewsQty++;
+    }
+
+    // Ordena e pega os 5 mais populares
+    return Object.values(movieMap)
+      .sort((a: any, b: any) => b.reviewsQty - a.reviewsQty)
+      .slice(0, 5);
   }
 }

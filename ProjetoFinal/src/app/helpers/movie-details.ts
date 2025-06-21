@@ -6,6 +6,7 @@ export interface MovieDetails {
   id: string;
   title: string;
   posterUrl: string;
+  releaseDate: Date | undefined;
   synopsis: string;
   genres: string[];
   director: string[];
@@ -31,10 +32,13 @@ export function getMovieDetails(
         const data = response?.short;
         if (!data) return null;
 
-        return {
+        const result = {
           id: imdbId,
           title: decodeHtml(data.name || ''),
           posterUrl: data.image || 'assets/images/movie.png',
+          releaseDate: data.datePublished
+            ? new Date(data.datePublished)
+            : undefined,
           synopsis: decodeHtml(
             data.description || data.plot?.plotText?.plainText || ''
           ),
@@ -56,6 +60,7 @@ export function getMovieDetails(
               ]
             : [],
         };
+        return result;
       }),
       catchError(() => of(null))
     );
