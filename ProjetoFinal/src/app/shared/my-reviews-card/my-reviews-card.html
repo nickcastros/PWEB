@@ -1,23 +1,27 @@
 <div class="my-reviews-card">
   <div class="poster-container">
-    <img [src]="poster" class="movie-poster" />
+    <img [src]="review.posterUrl || poster" class="movie-poster" />
   </div>
   <div class="mid-container">
     <div class="title">{{review.name}}</div>
     <div class="chips-container">
-      <app-chip *ngFor="let genre of genres" [genre]="genre" />
+      <app-chip *ngFor="let genre of review.genres" [genre]="genre" />
     </div>
     <div class="rating-stars-content">
-      <app-rating-stars />
+      <app-rating-stars [rating]="review.rating" />
     </div>
   </div>
   <div class="content-container">
     {{review.review}}
     <div class="actions">
-      <button class="edit-btn" title="Editar">
+      <button class="edit-btn" title="Editar" (click)="edit.emit(review.apiId)">
         <i class="ph ph-pencil"></i>
       </button>
-      <button class="delete-btn" title="Excluir">
+      <button
+        class="delete-btn"
+        title="Excluir"
+        (click)="delete.emit(review.id)"
+      >
         <i class="ph ph-trash"></i>
       </button>
     </div>

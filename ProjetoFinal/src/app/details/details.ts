@@ -82,7 +82,9 @@ export class Details {
                   rating: review.rating,
                   content: review.content,
                 }));
-                this.ratingInfo = (await this.supabase.getMovieRating(movie.id)).avg_rating;
+                this.ratingInfo = (
+                  await this.supabase.getMovieRating(movie.id)
+                ).avg_rating;
               }
             })
           );
@@ -127,6 +129,9 @@ export class Details {
         api_id: this.movie.id,
         title: this.movie.title,
         poster_url: this.movie.posterUrl,
+        genres: Array.isArray(this.movie.genres)
+          ? this.movie.genres.join(', ')
+          : this.movie.genres,
         rating: userRating,
         content: userReview ?? '',
         user_id: userId,

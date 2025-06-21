@@ -92,6 +92,7 @@ export class Supabase {
     api_id,
     title,
     poster_url,
+    genres,
     rating,
     content,
     user_id,
@@ -100,6 +101,7 @@ export class Supabase {
     api_id: string;
     title: string;
     poster_url: string;
+    genres: string;
     rating: number;
     content: string;
     user_id: string;
@@ -112,6 +114,7 @@ export class Supabase {
           api_id,
           title,
           poster_url,
+          genres,
           updated_at: new Date(),
         },
         { onConflict: 'api_id', ignoreDuplicates: false }
@@ -235,5 +238,47 @@ export class Supabase {
       avg_rating: movie.avg_rating ?? 0,
       reviews_qty: movie.reviews_qty ?? 0,
     };
+  }
+
+  async getUserReviews(user_id: string) {
+    // Busca as reviews do usuário, trazendo dados do filme relacionado
+    const { data: reviews, error } = await this.supabase
+      .from('reviews')
+      .select(
+        'id, rating, content, created_at, movies(title, poster_url, api_id,genres), profiles(full_name, avatar_url)'
+      )
+      .eq('user_id', user_id)
+      .order('created_at', { ascending: false });
+
+    if (error || !reviews) {
+      return [];
+    }
+
+    // Mapeia para um formato amigável para o card
+    return reviews.map((r: any) => ({
+      id: r.id,
+      name: r.movies?.title || 'Filme',
+      posterUrl: r.movies?.poster_url || '',
+      apiId: r.movies?.api_id || '',
+      genres: Array.isArray(r.movies?.genres)
+        ? r.movies.genres
+        : typeof r.movies?.genres === 'string' && r.movies.genres.length > 0
+        ? r.movies.genres.split(',').map((g: string) => g.trim())
+        : [],
+      rating: r.rating,
+      review: r.content,
+      createdAt: r.created_at,
+      user: r.profiles?.full_name || 'Usuário',
+      avatar: r.profiles?.avatar_url || 'assets/images/profile.png',
+    }));
+  }
+
+  async deleteReview(review_id: string) {
+    const { error } = await this.supabase
+      .from('reviews')
+      .delete()
+      .eq('id', review_id);
+
+    if (error) throw error;
   }
 }

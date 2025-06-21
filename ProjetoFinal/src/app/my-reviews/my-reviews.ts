@@ -1,47 +1,44 @@
 import { Component } from '@angular/core';
 import { MyReviewsCard } from '../shared/my-reviews-card/my-reviews-card';
 import { CommonModule } from '@angular/common';
+import { Supabase } from '../supabase';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-reviews',
-  imports: [MyReviewsCard, CommonModule, ],
+  imports: [MyReviewsCard, CommonModule],
   templateUrl: './my-reviews.html',
   styleUrl: './my-reviews.scss',
 })
 export class MyReviews {
+  reviews: any[] = [];
+  userName = '';
+  profileUrl = '';
+
+  constructor(private supabase: Supabase, private router: Router) {
+    this.supabase.session$.subscribe(async (session) => {
+      const user = session?.user;
+      if (user) {
+        this.userName = user.email || 'Usuário';
+        this.profileUrl = 'assets/images/profile.png';
+        this.reviews = await this.supabase.getUserReviews(user.id);
+      }
+    });
+  }
+
+  async removeReview(reviewId: string) {
+    try {
+      await this.supabase.deleteReview(reviewId);
+      this.reviews = this.reviews.filter((r) => r.id !== reviewId);
+    } catch (e) {
+      console.error('Erro ao remover review:', e);
+    }
+  }
+  goToDetails(apiId: string) {
+    this.router.navigate(['/details', apiId]);
+  }
+
   get profile(): string {
     return 'assets/images/profile.png';
   }
-
-  user = {
-    id: 1,
-    name: 'Nicolas Castro',
-    profileUrl: '',
-    reviews: [
-      {
-        id: 1,
-        name: 'Missão Impossível',
-        rating: 10,
-        porsterUrl: '',
-        review:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam commodo hendrerit metus et accumsan. Aliquam eros lorem, pretium vitae iaculis sed, posuere eget enim. Duis justo velit, porta imperdiet lacus ut, congue efficitur diam. Donec nec ante ante. Mauris luctus nulla sed suscipit blandit. Aenean feugiat arcu a ligula dapibus, ac feugiat libero blandit. Curabitur aliquam varius vehicula. Vivamus sodales nunc diam. Vivamus neque orci, iaculis id fermentum vel, finibus feugiat est. Cras efficitur tellus eget sapien interdum, id luctus nisl condimentum.',
-      },
-      {
-        id: 2,
-        name: 'Avagers',
-        rating: 8,
-        porsterUrl: '',
-        review:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam commodo hendrerit metus et accumsan. Aliquam eros lorem, pretium vitae iaculis sed, posuere eget enim. Duis justo velit, porta imperdiet lacus ut, congue efficitur diam. Donec nec ante ante. Mauris luctus nulla sed suscipit blandit. Aenean feugiat arcu a ligula dapibus, ac feugiat libero blandit. Curabitur aliquam varius vehicula. Vivamus sodales nunc diam. Vivamus neque orci, iaculis id fermentum vel, finibus feugiat est. Cras efficitur tellus eget sapien interdum, id luctus nisl condimentum.',
-      },
-      {
-        id: 3,
-        name: 'Ford vs Ferrari',
-        rating: 9.5,
-        porsterUrl: '',
-        review:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam commodo hendrerit metus et accumsan. Aliquam eros lorem, pretium vitae iaculis sed, posuere eget enim. Duis justo velit, porta imperdiet lacus ut, congue efficitur diam. Donec nec ante ante. Mauris luctus nulla sed suscipit blandit. Aenean feugiat arcu a ligula dapibus, ac feugiat libero blandit. Curabitur aliquam varius vehicula. Vivamus sodales nunc diam. Vivamus neque orci, iaculis id fermentum vel, finibus feugiat est. Cras efficitur tellus eget sapien interdum, id luctus nisl condimentum.',
-      },
-    ],
-  };
 }
