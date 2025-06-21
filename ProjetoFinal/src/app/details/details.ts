@@ -30,6 +30,12 @@ export class Details {
   movie: MovieDetails | null = null;
   selectedRating = 0;
   userReviewId: string | null = null;
+  ratingInfo: number = 0;
+  reviews: {
+    user: any;
+    rating: any;
+    content: any;
+  }[] = [];
 
   isLoading = false;
   successMessage = '';
@@ -65,6 +71,18 @@ export class Details {
                   this.reviewControl.setValue('');
                   this.userReviewId = null;
                 }
+              }
+              if (movie) {
+                const rawReviews = await this.supabase.getLastReviewsForMovie(
+                  movie.id,
+                  userId
+                );
+                this.reviews = rawReviews.map((review: any) => ({
+                  user: review.user ?? review.user_id ?? 'Usuário',
+                  rating: review.rating,
+                  content: review.content,
+                }));
+                this.ratingInfo = (await this.supabase.getMovieRating(movie.id)).avg_rating;
               }
             })
           );
@@ -115,7 +133,15 @@ export class Details {
         review_id: this.userReviewId,
       });
       this.successMessage = 'Avaliação enviada com sucesso!';
-
+      const updatedReview = await this.supabase.getUserReviewForMovie(
+        this.movie.id,
+        userId
+      );
+      if (updatedReview) {
+        this.selectedRating = updatedReview.rating;
+        this.reviewControl.setValue(updatedReview.content);
+        this.userReviewId = updatedReview.id;
+      }
     } catch (e) {
       this.errorMessage = 'Erro ao enviar avaliação. Tente novamente.';
     } finally {
@@ -124,26 +150,6 @@ export class Details {
   }
 
   reviewControl = new FormControl('');
-  reviews = [
-    {
-      user: 'User1',
-      rating: 10,
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam commodo hendrerit metus et accumsan. Aliquam eros lorem, pretium vitae iaculis sed, posuere eget enim. Duis justo velit, porta imperdiet lacus ut, congue efficitur diam. Donec nec ante ante. Mauris luctus nulla sed suscipit blandit. Aenean feugiat arcu a ligula dapibus, ac feugiat libero blandit. Curabitur aliquam varius vehicula. Vivamus sodales nunc diam. Vivamus neque orci, iaculis id fermentum vel, finibus feugiat est. Cras efficitur tellus eget sapien interdum, id luctus nisl condimentum.',
-    },
-    {
-      user: 'User2',
-      rating: 9,
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam commodo hendrerit metus et accumsan. Aliquam eros lorem, pretium vitae iaculis sed, posuere eget enim. Duis justo velit, porta imperdiet lacus ut, congue efficitur diam. Donec nec ante ante. Mauris luctus nulla sed suscipit blandit. Aenean feugiat arcu a ligula dapibus, ac feugiat libero blandit. Curabitur aliquam varius vehicula. Vivamus sodales nunc diam. Vivamus neque orci, iaculis id fermentum vel, finibus feugiat est. Cras efficitur tellus eget sapien interdum, id luctus nisl condimentum.',
-    },
-    {
-      user: 'User3',
-      rating: 9.5,
-      content:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam commodo hendrerit metus et accumsan. Aliquam eros lorem, pretium vitae iaculis sed, posuere eget enim. Duis justo velit, porta imperdiet lacus ut, congue efficitur diam. Donec nec ante ante. Mauris luctus nulla sed suscipit blandit. Aenean feugiat arcu a ligula dapibus, ac feugiat libero blandit. Curabitur aliquam varius vehicula. Vivamus sodales nunc diam. Vivamus neque orci, iaculis id fermentum vel, finibus feugiat est. Cras efficitur tellus eget sapien interdum, id luctus nisl condimentum.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam commodo hendrerit metus et accumsan. Aliquam eros lorem, pretium vitae iaculis sed, posuere eget enim. Duis justo velit, porta imperdiet lacus ut, congue efficitur diam. Donec nec ante ante. Mauris luctus nulla sed suscipit blandit. Aenean feugiat arcu a ligula dapibus, ac feugiat libero blandit. Curabitur aliquam varius vehicula. Vivamus sodales nunc diam. Vivamus neque orci, iaculis id fermentum vel, finibus feugiat est. Cras efficitur tellus eget sapien interdum, id luctus nisl condimentum.',
-    },
-  ];
 
   get poster(): string {
     return 'assets/images/movie.png';

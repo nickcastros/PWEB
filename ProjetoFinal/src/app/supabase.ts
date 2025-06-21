@@ -184,4 +184,56 @@ export class Supabase {
 
     return review;
   }
+  async getLastReviewsForMovie(api_id: string, exclude_user_id?: string) {
+    // Busca o filme pelo api_id para pegar o id interno
+    const { data: movie, error: movieError } = await this.supabase
+      .from('movies')
+      .select('id')
+      .eq('api_id', api_id)
+      .single();
+
+    if (movieError || !movie) {
+      return [];
+    }
+
+    let query = this.supabase
+      .from('reviews')
+      .select('id, user_id, rating, content, created_at,profiles(full_name)')
+      .eq('movie_id', movie.id)
+      .order('created_at', { ascending: false })
+      .limit(10);
+
+    if (exclude_user_id) {
+      query = query.neq('user_id', exclude_user_id);
+    }
+
+    const { data: reviews, error: reviewsError } = await query;
+
+    if (reviewsError || !reviews) {
+      return [];
+    }
+
+    // Mapeia para o formato esperado pelo ReviewCard
+    return reviews.map((r: any) => ({
+      user: r.profiles?.full_name || 'Usuário',
+      rating: r.rating,
+      content: r.content,
+    }));
+  }
+  async getMovieRating(api_id: string) {
+    const { data: movie, error } = await this.supabase
+      .from('movies')
+      .select('avg_rating, reviews_qty')
+      .eq('api_id', api_id)
+      .single();
+
+    if (error || !movie) {
+      return { avg_rating: 0, reviews_qty: 0 };
+    }
+
+    return {
+      avg_rating: movie.avg_rating ?? 0,
+      reviews_qty: movie.reviews_qty ?? 0,
+    };
+  }
 }

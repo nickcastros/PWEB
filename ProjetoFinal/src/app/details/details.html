@@ -5,7 +5,9 @@
       <div class="content-container">
         <div class="top-container">
           <div class="title-container">{{movie.title}}</div>
-          <div class="rating-container"><app-rating-stars /></div>
+          <div class="rating-container">
+            <app-rating-stars [rating]="ratingInfo" />
+          </div>
         </div>
         <div class="genres-container">
           <app-chip *ngFor="let genre of movie.genres" [genre]="genre" />
