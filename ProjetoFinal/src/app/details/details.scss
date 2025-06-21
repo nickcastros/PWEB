@@ -112,3 +112,16 @@
 .send-button:active {
   background-color: #3776c7; // cor ainda mais escura enquanto o botão está pressionado
 }
+
+.loading-message {
+  color: #569fff;
+  margin-bottom: 8px;
+}
+.success-message {
+  color: #2ecc40;
+  margin-bottom: 8px;
+}
+.error-message {
+  color: #ff4136;
+  margin-bottom: 8px;
+}

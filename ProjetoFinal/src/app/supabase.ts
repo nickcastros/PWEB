@@ -50,7 +50,7 @@ export class Supabase {
   profile(user: User) {
     return this.supabase
       .from('profiles')
-      .select(`full_name, email, avatar_url`)
+      .select(`full_name, avatar_url`)
       .eq('id', user.id)
       .single();
   }
@@ -86,5 +86,102 @@ export class Supabase {
     const { data } = await this.supabase.auth.getSession();
     this.sessionSubject.next(data.session);
     return data.session;
+  }
+
+  async addReview({
+    api_id,
+    title,
+    poster_url,
+    rating,
+    content,
+    user_id,
+    review_id,
+  }: {
+    api_id: string;
+    title: string;
+    poster_url: string;
+    rating: number;
+    content: string;
+    user_id: string;
+    review_id?: string | null;
+  }) {
+    const { data: movie, error: movieError } = await this.supabase
+      .from('movies')
+      .upsert(
+        {
+          api_id,
+          title,
+          poster_url,
+          updated_at: new Date(),
+        },
+        { onConflict: 'api_id', ignoreDuplicates: false }
+      )
+      .select()
+      .single();
+
+    if (movieError || !movie) {
+      throw movieError || new Error('Erro ao salvar filme');
+    }
+
+    if (review_id) {
+      // Atualiza review existente
+      const { data: review, error: reviewError } = await this.supabase
+        .from('reviews')
+        .update({
+          rating,
+          content,
+          created_at: new Date(),
+        })
+        .eq('id', review_id)
+        .select()
+        .single();
+
+      if (reviewError) throw reviewError;
+      return review;
+    } else {
+      // Insere novo review
+      const { data: review, error: reviewError } = await this.supabase
+        .from('reviews')
+        .insert({
+          movie_id: movie.id,
+          user_id,
+          rating,
+          content,
+          created_at: new Date(),
+        })
+        .select()
+        .single();
+
+      if (reviewError) throw reviewError;
+      return review;
+    }
+  }
+  async getUserReviewForMovie(api_id: string, user_id: string) {
+    // Busca o filme pelo api_id para pegar o id interno
+    const { data: movie, error: movieError } = await this.supabase
+      .from('movies')
+      .select('id')
+      .eq('api_id', api_id)
+      .single();
+
+    if (movieError || !movie) {
+      return null; // Filme ainda não existe na base
+    }
+
+    // Busca o review do usuário para esse filme
+    const { data: review, error: reviewError } = await this.supabase
+      .from('reviews')
+      .select('*')
+      .eq('movie_id', movie.id)
+      .eq('user_id', user_id)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single();
+
+    if (reviewError || !review) {
+      return null;
+    }
+
+    return review;
   }
 }

@@ -42,13 +42,29 @@
       <div class="star-rating-container">
         <div class="star-rating-top-row">
           <div class="title-container">Sua avaliação</div>
-          <div class="rating-stars"><app-star-rating /></div>
+          <div class="rating-stars">
+            <app-star-rating
+              [value]="selectedRating"
+              (valueChange)="selectedRating = $event"
+            />
+          </div>
         </div>
       </div>
       <app-review-input [control]="reviewControl" />
       <div class="send-button-container">
-        <button class="send-button">Enviar</button>
+        <button
+          class="send-button"
+          (click)="sendReview()"
+          [disabled]="isLoading"
+        >
+          Enviar
+        </button>
       </div>
+      <div *ngIf="isLoading" class="loading-message">Enviando avaliação...</div>
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
     </ng-container>
 
     <ng-template #loginPrompt>

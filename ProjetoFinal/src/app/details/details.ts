@@ -10,6 +10,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Supabase } from '../supabase';
 import { getMovieDetails, MovieDetails } from '../helpers/movie-details';
 import { HttpClient } from '@angular/common/http';
+import { combineLatest, filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-details',
@@ -27,6 +28,12 @@ import { HttpClient } from '@angular/common/http';
 export class Details {
   isLoggedIn = false;
   movie: MovieDetails | null = null;
+  selectedRating = 0;
+  userReviewId: string | null = null;
+
+  isLoading = false;
+  successMessage = '';
+  errorMessage = '';
 
   constructor(
     private supabase: Supabase,
@@ -34,23 +41,88 @@ export class Details {
     private route: ActivatedRoute,
     private http: HttpClient
   ) {
-    this.supabase.session$.subscribe((session) => {
-      this.isLoggedIn = !!session?.user;
-    });
-
-    this.route.paramMap.subscribe((params) => {
-      const imdbId = params.get('id');
-      if (imdbId) {
-        getMovieDetails(this.http, imdbId).subscribe((movie) => {
-          this.movie = movie;
-        });
-      }
-    });
+    combineLatest([this.supabase.session$, this.route.paramMap])
+      .pipe(
+        filter(([session, params]) => !!params.get('id')),
+        switchMap(([session, params]) => {
+          this.isLoggedIn = !!session?.user;
+          const userId = session?.user?.id;
+          const imdbId = params.get('id')!;
+          return getMovieDetails(this.http, imdbId).pipe(
+            switchMap(async (movie) => {
+              this.movie = movie;
+              if (userId && movie) {
+                const review = await this.supabase.getUserReviewForMovie(
+                  movie.id,
+                  userId
+                );
+                if (review) {
+                  this.selectedRating = review.rating;
+                  this.reviewControl.setValue(review.content);
+                  this.userReviewId = review.id;
+                } else {
+                  this.selectedRating = 0;
+                  this.reviewControl.setValue('');
+                  this.userReviewId = null;
+                }
+              }
+            })
+          );
+        })
+      )
+      .subscribe();
   }
 
   goToLogin() {
     this.router.navigate(['/auth']);
   }
+
+  async sendReview() {
+    if (!this.movie || !this.isLoggedIn) return;
+
+    this.isLoading = true;
+    this.successMessage = '';
+    this.errorMessage = '';
+
+    const session = await this.supabase.getSession();
+    const userId = session?.user?.id;
+    if (!userId) {
+      this.isLoading = false;
+      return;
+    }
+
+    const userRating = this.selectedRating;
+    const userReview = this.reviewControl.value;
+
+    const review = await this.supabase.getUserReviewForMovie(
+      this.movie.id,
+      userId
+    );
+    if (review) {
+      this.selectedRating = review.rating;
+      this.reviewControl.setValue(review.content);
+      this.userReviewId = review.id; // Salva o id do review
+    }
+
+    try {
+      await this.supabase.addReview({
+        api_id: this.movie.id,
+        title: this.movie.title,
+        poster_url: this.movie.posterUrl,
+        rating: userRating,
+        content: userReview ?? '',
+        user_id: userId,
+        review_id: this.userReviewId,
+      });
+      this.successMessage = 'Avaliação enviada com sucesso!';
+
+    } catch (e) {
+      this.errorMessage = 'Erro ao enviar avaliação. Tente novamente.';
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
   reviewControl = new FormControl('');
   reviews = [
     {

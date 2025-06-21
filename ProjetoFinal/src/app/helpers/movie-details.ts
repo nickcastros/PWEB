@@ -33,23 +33,25 @@ export function getMovieDetails(
 
         return {
           id: imdbId,
-          title: data.name || '',
+          title: decodeHtml(data.name || ''),
           posterUrl: data.image || 'assets/images/movie.png',
-          synopsis: data.description || data.plot?.plotText?.plainText || '',
+          synopsis: decodeHtml(
+            data.description || data.plot?.plotText?.plainText || ''
+          ),
           genres: Array.isArray(data.genre)
-            ? data.genre
-            : data.genres?.genres?.map((g: any) => g.text) || [],
-          director: (data.director || []).map((d: any) => d.name),
+            ? data.genre.map((g: string) => decodeHtml(g))
+            : data.genres?.genres?.map((g: any) => decodeHtml(g.text)) || [],
+          director: (data.director || []).map((d: any) => decodeHtml(d.name)),
           writers: (data.creator || [])
             .filter((c: any) => c['@type'] === 'Person')
-            .map((w: any) => w.name),
-          actors: (data.actor || []).map((a: any) => a.name),
+            .map((w: any) => decodeHtml(w.name)),
+          actors: (data.actor || []).map((a: any) => decodeHtml(a.name)),
           reviews: data.review
             ? [
                 {
-                  user: data.review.author?.name || 'Usuário',
+                  user: decodeHtml(data.review.author?.name || 'Usuário'),
                   rating: data.review.reviewRating?.ratingValue || '',
-                  content: data.review.reviewBody || '',
+                  content: decodeHtml(data.review.reviewBody || ''),
                 },
               ]
             : [],
@@ -57,4 +59,10 @@ export function getMovieDetails(
       }),
       catchError(() => of(null))
     );
+}
+
+export function decodeHtml(html: string): string {
+  const txt = document.createElement('textarea');
+  txt.innerHTML = html;
+  return txt.value;
 }
