@@ -51,7 +51,7 @@
         <h2>Recentes</h2>
         <div class="movies-container">
           <app-movie-card
-            *ngFor="let movie of movies"
+            *ngFor="let movie of recent"
             [movie]="movie"
           ></app-movie-card>
         </div>
@@ -59,7 +59,10 @@
       <div>
         <h2>Em Breve</h2>
         <div class="movies-container">
-          <app-movie-card *ngFor="let movie of movies" [movie]="movie" />
+          <app-movie-card
+            *ngFor="let movie of upcomingMovies"
+            [movie]="movie"
+          />
         </div>
       </div>
       <div class="top-list-container">

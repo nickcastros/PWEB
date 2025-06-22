@@ -346,4 +346,42 @@ export class Supabase {
       .sort((a: any, b: any) => b.reviewsQty - a.reviewsQty)
       .slice(0, 5);
   }
+  async getRecentMovies() {
+    const today = new Date().toISOString().split('T')[0]; // formato YYYY-MM-DD
+    const { data: movies, error } = await this.supabase
+      .from('movies')
+      .select('api_id, title, poster_url, releaseDate, genres')
+      .lte('releaseDate', today)
+      .order('releaseDate', { ascending: false })
+      .limit(10);
+
+    if (error || !movies) {
+      return [];
+    }
+
+    return movies.map((m: any) => ({
+      id: m.api_id,
+      title: m.title,
+      posterUrl: m.poster_url,
+    }));
+  }
+  async getUpcomingMovies() {
+    const today = new Date().toISOString().split('T')[0]; // formato YYYY-MM-DD
+    const { data: movies, error } = await this.supabase
+      .from('movies')
+      .select('api_id, title, poster_url, releaseDate, genres')
+      .gt('releaseDate', today)
+      .order('releaseDate', { ascending: true }) // mais próximo primeiro
+      .limit(10);
+
+    if (error || !movies) {
+      return [];
+    }
+
+    return movies.map((m: any) => ({
+      id: m.api_id,
+      title: m.title,
+      posterUrl: m.poster_url,
+    }));
+  }
 }

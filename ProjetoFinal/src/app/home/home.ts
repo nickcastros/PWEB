@@ -35,13 +35,25 @@ export class Home implements OnInit {
     genres: [];
   }[] = [];
 
+  recent: {
+    id: string;
+    title: string;
+    posterUrl: string;
+  }[] = [];
+
   popular: {
     id: string;
     title: string;
     posterUrl: string;
     reviewsQty: number;
   }[] = [];
-  
+
+  upcomingMovies: {
+    id: string;
+    title: string;
+    posterUrl: string;
+  }[] = [];
+
   constructor(private http: HttpClient, private supabase: Supabase) {
     this.searchForm
       .get('nome')!
@@ -57,6 +69,8 @@ export class Home implements OnInit {
   async ngOnInit() {
     this.top10 = await this.supabase.getTop10Movies();
     this.popular = await this.supabase.getPopularMoviesLast7Days();
+    this.recent = await this.supabase.getRecentMovies();
+    this.upcomingMovies = await this.supabase.getUpcomingMovies();
   }
   searchForm = new FormGroup({
     nome: new FormControl(''),
